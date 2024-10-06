@@ -20,7 +20,9 @@
     });
 
     document.getElementById('show-init-data').addEventListener('click', () => {
-        document.getElementById('init-data-label').innerHTML = 'Telegram.WebApp.initData = ' + Telegram.WebApp.initData;
+        let html = '<p> location.search = ' + location.search + '</p>';
+        html += '<p> Telegram.WebApp.initData = ' + Telegram.WebApp.initData + '</p>';
+        document.getElementById('init-data-label').innerHTML = html;
     });
 </script>
 </html>
