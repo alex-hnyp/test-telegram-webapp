@@ -8,8 +8,12 @@
     <p>
         <button id="invoke-sendData-token-expired">Emulate token expired case</button>
     </p>
+
     <button id="show-init-data">Show initData</button>
     <p id="init-data-label"></p>
+
+    <button id="get-user-token">Get user token</button>
+    <p id="user-token-label"></p>
 </body>
 
 <script>
@@ -24,5 +28,21 @@
         html += '<p> Telegram.WebApp.initData = ' + Telegram.WebApp.initData + '</p>';
         document.getElementById('init-data-label').innerHTML = html;
     });
+
+    document.getElementById('get-user-token').addEventListener('click', async () => {
+        const queryParams = location.search.substring(1).split('&');
+        const operatorId = queryParams.find((it) => it.startsWith('operatorId')).split('=')[1];
+
+        const apiEndpoint = `http://localhost:8081/api/v1/feed-integration/security/operator/${operatorId}/telegram-webapp-token`;
+
+        const response = await fetch(apiEndpoint, {
+            method: "POST",
+            body: JSON.stringify({ webAppInitialData: Telegram.WebApp.initData }),
+        });
+        const responseText = await response.text();
+
+        document.getElementById('user-token-label').innerHTML = responseText;
+    });
+
 </script>
 </html>
